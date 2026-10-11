@@ -1,0 +1,24 @@
+[Unit]
+Description=Hanabi web game
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=firegame
+Group=firegame
+WorkingDirectory=/opt/fire-game/current
+Environment=NODE_ENV=production
+Environment=NEXT_TELEMETRY_DISABLED=1
+ExecStart=/usr/bin/node /opt/fire-game/current/node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 3000 --keepAliveTimeout 65000
+Restart=on-failure
+RestartSec=3
+KillSignal=SIGTERM
+KillMode=mixed
+TimeoutStopSec=8
+SendSIGKILL=yes
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
